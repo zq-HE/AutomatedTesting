@@ -59,11 +59,10 @@ public class TestSelection {
             getClasses(classesDir,classes);
             ArrayList<File> test_classes = new ArrayList<File>();
             getClasses(test_classesDir,test_classes);
-            //初始化
-            init();
+
             //创建scope
-            AnalysisScope scope = AnalysisScopeReader.readJavaScope(getJarPath()+"\\scope.txt",
-                    new File(getJarPath()+"\\exclusion.txt"), ClassLoader.getSystemClassLoader());
+            AnalysisScope scope = AnalysisScopeReader.readJavaScope("scope.txt",
+                    new File("exclusion.txt"), ClassLoader.getSystemClassLoader());
             //加入测试类到scope
             ArrayList<String> testSignature = new ArrayList<String>();
             for(File clazz:test_classes){
@@ -352,7 +351,7 @@ public class TestSelection {
     }
 
     /**
-     * @description: 判断target方法和改变的方法是否存在类级别的依赖关系
+     * @description: 判断target方法和改变的方法是否存在方法级别的依赖关系
      * @param target：目标方法
      * @param changeInfo：改变的方法的信息（类名）
      * @param proMethods：生产类
@@ -388,69 +387,6 @@ public class TestSelection {
         {
             e.printStackTrace();
             return null;
-        }
-    }
-
-    /**
-     * @description: 用于初始化scope.txt和exclusion.txt文件
-     */
-    public static void init(){
-        String exclusion = "apple\\/.*\n" +
-                "com\\/apple\\/.*\n" +
-                "com\\/ibm\\/.*\n" +
-                "com\\/oracle\\/.*\n" +
-                "com\\/sun\\/.*\n" +
-                "dalvik\\/.*\n" +
-                "java\\/beans\\/.*\n" +
-                "java\\/io\\/ObjectStreamClass*\n" +
-                "java\\/rmi\\/.*\n" +
-                "java\\/text\\/.*\n" +
-                "java\\/time\\/.*\n" +
-                "javafx\\/.*\n" +
-                "javafx\\/beans\\/.*\n" +
-                "javafx\\/collections\\/.*\n" +
-                "javafx\\/scene\\/.*\n" +
-                "javax\\/accessibility\\/.*\n" +
-                "javax\\/activation\\/.*\n" +
-                "javax\\/activity\\/.*\n" +
-                "javax\\/annotation\\/.*\n" +
-                "javax\\/crypto\\/.*\n" +
-                "javax\\/imageio\\/.*\n" +
-                "javax\\/jnlp\\/.*\n" +
-                "javax\\/jws\\/.*\n" +
-                "javax\\/management\\/.*\n" +
-                "javax\\/net\\/.*\n" +
-                "javax\\/print\\/.*\n" +
-                "javax\\/rmi\\/.*\n" +
-                "javax\\/script\\/.*\n" +
-                "javax\\/smartcardio\\/.*\n" +
-                "javax\\/sound\\/.*\n" +
-                "javax\\/sql\\/.*\n" +
-                "javax\\/tools\\/.*\n" +
-                "jdk\\/.*\n" +
-                "netscape\\/.*\n" +
-                "oracle\\/jrockit\\/.*\n" +
-                "org\\/apache\\/xerces\\/.*\n" +
-                "org\\/ietf\\/.*\n" +
-                "org\\/jcp\\/.*\n" +
-                "org\\/netbeans\\/.*\n" +
-                "org\\/omg\\/.*\n" +
-                "org\\/openide\\/.*\n" +
-                "sun\\/.*\n" +
-                "sun\\/awt\\/.*\n" +
-                "sun\\/swing\\/.*\n";
-        String scope = "Primordial,Java,stdlib,none";
-        try {
-            //创建scope.txt文件
-            BufferedWriter out = new BufferedWriter(new FileWriter(getJarPath()+"\\scope.txt"));
-            out.write(scope);
-            out.close();
-            //创建exclusion.txt文件
-            out = new BufferedWriter(new FileWriter(getJarPath()+"\\exclusion.txt"));
-            out.write(exclusion);
-            out.close();
-        }catch (IOException e){
-            e.printStackTrace();
         }
     }
 }
